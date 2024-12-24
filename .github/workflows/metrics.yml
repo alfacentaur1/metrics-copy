@@ -1,0 +1,24 @@
+name: Generate Metrics
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Spustí se každý den o půlnoci
+  workflow_dispatch: # Umožňuje manuální spuštění
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Krok 1: Získání kódu z repozitáře
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Krok 2: Nastavení Metrics
+      - name: Setup Metrics
+        uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Automaticky přístupný token
+          user: alfacentaur1 
+          template: classic # Vyberte šablonu
+          base: header, activity, community, repositories, metadata
